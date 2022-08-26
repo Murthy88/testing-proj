@@ -1,0 +1,83 @@
+<header class="navbar sticky-top bg-white flex-md-nowrap p-0">
+    <div class="ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasmenu">
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasmenu" data-bs-keyboard="false" data-bs-backdrop="true">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h6 class="offcanvas-title  d-sm-block mx-auto" id="offcanvasmenu"><img src="../../assets/images/west_logo.png" class="img-fluid"></h6>
+        </div>
+        <div class="offcanvas-body px-0">
+            <nav id="sidebar">
+                <ul class="list-unstyled components">
+                   <li><a href="" data-toggle="collapse" aria-expanded="false">DATA</a></li>
+                   <li><a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">REPORTS </a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                          <li>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">SALES</a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu">
+                              <li><a href="#">DAILY SALES</a></li>
+                              <li><a href="#">INVENTORY PROJECTIONS</a></li>
+                              <li><a href="#">F & I SUMMARY</a></li>
+                              <li><a href="#">DEALS</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">Finance</a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu1">
+                              <li><a href="#">DAILY SALES</a></li>
+                              <li><a href="#">INVENTORY PROJECTIONS</a></li>
+                              <li><a href="#">F & I SUMMARY</a></li>
+                              <li><a href="#">DEALS</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                   </li>
+                   <li><a href="" data-toggle="collapse" aria-expanded="false">EXCHANGE</a></li>
+                   <li><a href="" data-toggle="collapse" aria-expanded="false">UCAR</a></li>
+                   <li><a href="" data-toggle="collapse" aria-expanded="false">SERVICE MAX</a></li>
+                   <li><a href="" data-toggle="collapse" aria-expanded="false">TOUCH</a></li>
+
+                </ul>
+              </nav>
+        </div>
+      </div>
+    <a class="navbar-brand ms-lg-3" href="#"><img src="assets/images/west_logo.png" class="img-fluid"></a>
+
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+     <div >
+    <select class="form-select" aria-label="Default select example" style="width: auto;" *ngFor="let x of headeronedata">
+      <option >{{x.asLegalentityName}}</option>
+    </select>
+    </div>
+    <div class="d-lg-flex justify-content-end ms-lg-auto me-lg-4">
+       <div class="heading mt-lg-0 mt-3 d-flex justify-content-end align-items-center">
+        <div class="icons me-auto">
+          <img src="assets/images/Action.png" class="img-fluid" alt="">
+          <img src="assets/images/Chat.png" class="img-fluid" alt="">
+          <img src="assets/images/Favourite.png" class="img-fluid" alt="">
+          <img src="assets/images/Export.png" class="img-fluid" alt="">
+          <img src="assets/images/Print.png" class="img-fluid" alt="">
+          <img src="assets/images/settings.png" class="img-fluid pe-3" alt="">
+        </div>
+       </div>
+    </div>
+    <div class=" d-flex align-items-center mx-auto mx-lg-0 pe-lg-4 py-2 py-lg-0 ">
+
+        <div class="prof">
+          <!-- <div class="prof_pic"> </div> -->
+          <div class="text">
+            <div class="grt">Welcome</div>
+            <div class="name">{{Username}}, <span>{{Usertitle}}</span></div>
+          </div>
+        </div>
+        <div><img src="../../assets/images/trax_logo.png" class="img-fluid "> </div>
+    </div>
+    <div class="popover__wrapper"><img src="../../assets/images/logout_icon.png" class="img-fluid " style="cursor: pointer;" (click)="logout()">
+
+        </div>
+</header>

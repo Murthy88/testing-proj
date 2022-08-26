@@ -1,0 +1,275 @@
+<app-header></app-header>
+<div class="container-fluid mt-4">
+  <div class="col-lg-12 mx-auto px-4">
+    <div class="d-flex justify-content-between align-items-baseline">
+      <div class="sub_head"><span>//</span>Users</div>
+      <div class="search-list">
+      <input type="text" name="search" id="listsearch" class="form-control search-field"  [(ngModel)]="serachtext" placeholder="Search">
+      <small id="helpId" class="text"></small></div>
+
+      <button class="btn ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="adduser()" *ngIf = "(editicon =='super admin' || entryuname=='manager'); ">Add</button>
+    </div>
+    <div class="grid_bg">
+
+      <div class="dash">
+        <table class="table table-borderless align-middle">
+          <thead>
+            <tr>
+
+              <th [appSort]="view"data-order="desc" data-name="username" scope="col">UserName</th>
+              <th  [appSort]="view"data-order="desc" data-name="displayname" scope="col">DisplayName</th>
+              <th  [appSort]="view"data-order="desc" data-name="name" scope="col">Stores</th>
+              <th  [appSort]="view"data-order="desc" data-name="title" scope="col">Title</th>
+              <th  [appSort]="view"data-order="desc" data-name="uEmail" scope="col">Email</th>
+              <th  [appSort]="view"data-order="desc" data-name="uActive" scope="col">Status</th>
+              <th >Edit</th>
+              <th  > Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+             <tr  *ngFor="let u of view | user:serachtext">
+
+
+              <td>{{u.username}}</td>
+              <td>{{u.displayname}}</td>
+              <td>{{u.name}}</td>
+              <td>{{u.title}}</td>
+               <td>{{u.uEmail}}</td>
+              <td>{{u.uActive}}</td>
+              <td ><div ><img src="assets/images/Edit.png" class="img-fluid" alt=""  data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf = "(editicon =='super admin' || entryuname=='manager'|| u.username==entryuname); else elseBlock" (click)="EditClick(u)"
+                      id="img">
+                      <ng-template #elseBlock>
+                        <input type="image" src="assets/images/Edit.png" data-toggle="modal" (click)="alrt()" >
+                    </ng-template>
+
+             </div> </td>
+              <td><img src="assets/images/Delete.png" class="img-fluid" alt="" *ngIf = "(editicon =='super admin' || entryuname=='manager'); else elseBlock1" (click)="deleteuser(u)"
+
+                      id="img" >
+                      <ng-template #elseBlock1>
+                        <input type="image" src="assets/images/Delete.png" data-toggle="modal" (click)="alrt()" >
+                    </ng-template></td>
+
+       </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- form -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header add_sett">
+        <div class="header d-flex align-items-center">
+          <h5 class="m-0 ms-2">
+              <img src="" alt=""> <span class="slash">//</span>Users
+          </h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="margin-left:230px ;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      </div>
+      <div class="modal-body">
+        <div class="add_sett">
+            <div class="cont d-flex flex-column align-items-center justify-content-center">
+                <div class="container-fluid">
+                  <form [formGroup]="userForm">
+
+                    <div class="row mb-3 ">
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label>UserName</label>
+                              <input type="name" class="form-control"  formControlName="UserName">
+                              <div *ngIf="userForm.controls['UserName'].invalid && FormSubmitted">
+                                <div *ngIf="userForm.controls['UserName'].errors?.['required']" style="color: red">*Username required.</div>
+                                </div>
+                          </div>
+                      </div>
+                      <div class="col-6">
+                        <div class=" form-group set">
+                            <label>DisplayName</label>
+                            <input type="name" class="form-control"  formControlName="DName">
+                            <div *ngIf="userForm.controls['DName'].invalid && FormSubmitted">
+                              <div *ngIf="userForm.controls['DName'].errors?.['required']" style="color: red">*Displayname required.</div>
+                              </div>
+                        </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row mb-3 " *ngIf="add12">
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label>Password</label>
+                              <input type="password" class="form-control"  formControlName="Password">
+                              <div *ngIf="userForm.controls['Password'].invalid && FormSubmitted">
+                                <div *ngIf="userForm.controls['Password'].errors?.['required']" style="color: red">*Password required.</div>
+                                </div>
+                          </div>
+                      </div>
+
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label>Confirmmpassword</label>
+                              <input type="password" class="form-control" formControlName="confirmpass">
+                              <div *ngIf="userForm.controls['confirmpass'].invalid && FormSubmitted">
+                                <div *ngIf="userForm.controls['confirmpass'].errors?.['required']" style="color: red">*Confirmpass required.</div>
+                                <div *ngIf="userForm.controls['confirmpass'].errors?.['confirmedValidator']" style="color: red;">*Password MissMatch.</div>
+                                </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- <div  class="row mb-3">
+                    <div class="col-12">
+                      <div class=" form-group set">
+                        <label >Stores</label>
+
+                        <ng-multiselect-dropdown
+                        [settings]="dropdownUsers" [data]="drowpdown"
+                        formControlName="stores" (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+
+                        <div *ngIf="userForm.controls['stores'].invalid && FormSubmitted">
+                          <div *ngIf="userForm.controls['stores'].errors?.['required']" style="color: red">*Store required.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+
+                  <div class="row mb-3">
+                      <div class="col-6">
+                        <div class=" form-group set">
+                          <label for="">Role:</label>
+
+                          <select class="form-select" aria-label="" formControlName="RoleId" (change)="change($event)">
+
+                              <option *ngFor="let a of allroles" value="{{a.rId}}">{{a.rName}}</option>
+
+
+                           </select>
+                           <div *ngIf="userForm.controls['RoleId'].invalid && FormSubmitted">
+                            <div *ngIf="userForm.controls['RoleId'].errors?.['required']" style="color: red">*RoleId required.</div>
+                            </div>
+                      </div>
+                      </div>
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label for="">Status:</label>
+                              <select class="form-select" aria-label="" formControlName="Status" (change)="change2($event)">
+
+                                  <option value="Y">Active</option>
+                                  <option value="N">InActive</option>
+
+                               </select>
+                               <div *ngIf="userForm.controls['Status'].invalid && FormSubmitted">
+                                <div *ngIf="userForm.controls['Status'].errors?.['required']" style="color: red">*Status required.</div>
+                                </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-12 ">
+                        <div class=" form-group set">
+                          <label for="" >Email</label>
+                          <input type="name" class="form-control"  formControlName="Email">
+                          <div *ngIf="userForm.controls['Email'].invalid && FormSubmitted">
+                            <div *ngIf="userForm.controls['Email'].errors?.['required']" style="color: red">*Email required.</div>
+                            </div>
+                            <!-- <div *ngIf="userForm.controls['Email'].errors?.['email']" style="color: red">*Enter Proper Email.</div> -->
+                            </div>
+
+                        </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-12 d-flex ">
+                          <div *ngIf="add12" class="btn sub_btn me-2" type="button"   (click)="AddUser()" >Submit</div>
+                          <div *ngIf="save" class="btn sub_btn me-2" type="button" (click)="UpdateUser(datausers.uId)" >Submit</div>
+                          <div class="btn can_btn ms-2" type="button" data-bs-dismiss="modal" aria-label="Close">Cancel</div>
+                          <div *ngIf="save" class="btn sub_btn me-2" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal1"   style="margin-left:100px ;" >Restpassword</div>
+                      </div>
+
+                  </div>
+
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- form -->
+<!-- Restpassword form -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header add_sett">
+        <div class="header d-flex align-items-center">
+          <h5 class="m-0 ms-2">
+              <img src="" alt=""> <span class="slash">//</span>Restpassword
+          </h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="margin-left:180px ;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      </div>
+      <div class="modal-body">
+        <div class="add_sett">
+            <div class="cont d-flex flex-column align-items-center justify-content-center">
+                <div class="container-fluid">
+                  <form [formGroup]="userForm">
+
+                    <div class="row mb-3 ">
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label>UserName</label>
+                              <input type="name" class="form-control"  formControlName="UserName" [attr.disabled]="userForm ? '' : null">
+                          </div>
+                        </div>
+                  </div>
+                  <div class="row mb-3 ">
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label>Password</label>
+                              <input type="password" class="form-control"  formControlName="Password">
+
+                          </div>
+                      </div>
+                      <div class="col-6">
+                          <div class=" form-group set">
+                              <label>Confirmmpassword</label>
+                              <input type="password" class="form-control" formControlName="confirmpass">
+                              <div *ngIf="userForm.controls['confirmpass'].errors?.['confirmedValidator']" style="color: red;">*Password MissMatch.</div>
+
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-12 d-flex ">
+                          <div class="btn sub_btn me-2" type="button"  >Submit</div>
+                          <div class="btn can_btn ms-2" type="button" data-bs-dismiss="modal" aria-label="Close">Cancel</div>
+                      </div>
+                  </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- Restpassword form -->
